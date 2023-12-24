@@ -1,0 +1,64 @@
+.top {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.quote {
+  font-size: 18px;
+  font-style: italic;
+  color: #333;
+}
+
+.notify {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.notify span {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.body {
+  margin: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+.body div {
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.update_btn {
+  background-color: #28a745;
+}

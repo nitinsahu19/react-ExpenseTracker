@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import classes from "./SignUp.module.css";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "./server/auth-context";
+import { AuthContext } from "./server/auth-context";
 
 const SignUp = () => {
   // State variables to keep track of input form and user details
@@ -72,6 +72,7 @@ const SignUp = () => {
       .then((data) => {
         console.log(data);
         // navigate to homepage if user did successful login
+        authCtx.login(data.idToken);
         navigate("/homepage");
       })
 
