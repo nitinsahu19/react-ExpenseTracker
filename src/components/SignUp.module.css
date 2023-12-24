@@ -53,6 +53,11 @@ button {
   cursor: pointer;
 }
 
+/* forgot password link */
+.forgot_password {
+  margin-left: 120px;
+}
+
 /* Style for the Sign Up and Sign In buttons */
 button[type="submit"] {
   background-color: #4caf50;

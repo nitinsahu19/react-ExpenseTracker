@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classes from "./SignUp.module.css";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "./server/auth-context";
 
-// Functional component SignUp
 const SignUp = () => {
   // State variables to keep track of input form and user details
   const [haveAccount, setHaveAccount] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  // using to create a reference with the context store
+  const authCtx = useContext(AuthContext);
+
+  // Use the 'useNavigate' hook to get the 'navigate' function,  It allows us to navigate between different pages in the application without using traditional links.
+  const navigate = useNavigate();
 
   // Handler functions to update state based on user input
   const emailHandler = (event) => setEmail(event.target.value);
@@ -19,17 +26,28 @@ const SignUp = () => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    let url, formValues;
+    if (!haveAccount) {
+      // Check if password and confirm password match
+      if (password !== confirmPassword) {
+        alert("Both entered password mismatch");
+        return;
+      }
+    }
 
+    let url, formValues;
     // condtionally selection the signIN and signUp url of firebase API
     if (!haveAccount) {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBGskndt7Y9RhmytxZADFlsOH8jfKpjRi4";
-      formValues = { email, password, confirmPassword };
+      formValues = {
+        email,
+        password,
+        returnSecureToken: true,
+      };
     } else {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBGskndt7Y9RhmytxZADFlsOH8jfKpjRi4";
-      formValues = { email, password };
+      formValues = { email, password, returnSecureToken: true };
     }
 
     // unfilling the input fields of form
@@ -44,15 +62,20 @@ const SignUp = () => {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
+        if (!response.ok) {
           throw new Error("Error in sending data");
         }
+        return response.json();
       })
+
+      //getting response.json() data if all seems ok
       .then((data) => {
         console.log(data);
+        // navigate to homepage if user did successful login
+        navigate("/homepage");
       })
+
+      // if login process throw some error
       .catch((error) => {
         console.log(error.message);
       });
@@ -93,7 +116,16 @@ const SignUp = () => {
           required
         />
 
-        {/* Conditional rendering of Confirm Password input field */}
+        {/* conditonal rendering for forgot password */}
+        <div>
+          {haveAccount && (
+            <a className={classes.forgot_password} href="#">
+              Forgot password
+            </a>
+          )}
+        </div>
+
+        {/* conditional rendering of Confirm Password input field */}
         {!haveAccount && (
           <>
             <label htmlFor="confirm-password">Confirm Password: </label>
@@ -112,8 +144,8 @@ const SignUp = () => {
         {/* Conditional rendering of buttons based on haveAccount state */}
         {haveAccount ? (
           <>
+            <button type="submit">Login</button>
             <p>
-              <button type="submit">Login</button>
               Don't have an account?
               <button type="button" onClick={accountHandler}>
                 Sign Up
@@ -122,8 +154,8 @@ const SignUp = () => {
           </>
         ) : (
           <>
+            <button type="submit">Submit</button>
             <p>
-              <button type="submit">Submit</button>
               Have an account?{" "}
               <button type="button" onClick={accountHandler}>
                 Login
