@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import classes from "./HomePage.module.css";
+import NavigationBar from "../navigationBar/NavigationBar";
 
 const HomePage = () => {
   const emailVerificationHandler = () => {
@@ -26,6 +27,7 @@ const HomePage = () => {
   };
   return (
     <>
+      <NavigationBar />
       <div>
         <h3 className={classes.welcome_text}>Welcome to Expense tracker</h3>
         <p className={classes.profileIncomplete_text}>
