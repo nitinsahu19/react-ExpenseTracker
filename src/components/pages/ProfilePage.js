@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./ProfilePage.module.css";
 
 const ProfilePage = () => {
   // State variables for storing name and profile picture URL
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
+  const [displayName, setDisplayName] = useState("User");
+  const [photoUrl, setPhotoUrl] = useState("user_icon.png");
 
   // Event handler for updating 'name' and 'url' state based on input changes
   const nameHandler = (event) => setName(event.target.value);
@@ -37,17 +39,64 @@ const ProfilePage = () => {
         }
         return response.json();
       })
-      .then((data) => console.log(data))
-      .catch((error) => {
-        console.log(error.message);
-      });
+      .then((data) => {
+        console.log(data);
+      })
+      // catching errors if occurs
+      .catch((error) => console.log(error.message));
   };
+
+  const getUserData = () => {
+    // doing request do get the stored data for profile details
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBGskndt7Y9RhmytxZADFlsOH8jfKpjRi4",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          idToken: localStorage.getItem("token"),
+          returnSecureToken: true,
+        }),
+      }
+    )
+      .then((response) => {
+        if (!response) {
+          throw new Error("Error in fetching user details");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Check if data is available and log the result
+        if (data) {
+          console.log("Data fetched successfully:", data);
+          //  response from the server is an array of users, not a single user object.
+          setDisplayName(data.users[0].displayName);
+          setPhotoUrl(data.users[0].photoUrl);
+        } else {
+          console.log("Data is not available in the database.");
+        }
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  // getUserData() call on the page refresh only once
+  useEffect(getUserData, []);
 
   return (
     <>
       {/* Top section with a quote and profile completion notification */}
       <div className={classes.top}>
         <p className={classes.quote}>Winners never quit, Quitters never win.</p>
+
+        {/*profile section includes photo & name  */}
+        <div className={classes.profile}>
+          <img
+            className={classes.userIcon}
+            src={`assets/${photoUrl}`}
+            alt="User Icon"
+          />
+          <h2 className={classes.userText}>{`Hi, ${displayName}`}</h2>
+        </div>
+
         <p className={classes.notify}>
           Your Profile is 64% completed. A complete Profile has higher chances
           of landing a job.
@@ -56,9 +105,8 @@ const ProfilePage = () => {
           </span>
         </p>
       </div>
-
       {/* Body section containing contact details  */}
-      <div className={classes.body}>
+      <div className={classes.inner_body}>
         <div>
           {/* Heading and cancel button */}
           <h2>Contact Details</h2> <button>Cancel</button>

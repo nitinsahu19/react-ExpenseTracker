@@ -1,47 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styling for the top section */
 .top {
-  background-color: #f2f2f2;
+  background-color: #f0f0f0;
   padding: 20px;
-  border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 .quote {
-  font-size: 18px;
   font-style: italic;
-  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+.userIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.userText {
+  font-size: 1.5em;
 }
 
 .notify {
-  font-size: 14px;
-  color: #666;
-  margin-top: 10px;
-}
-
-.notify span {
   font-weight: bold;
-  color: #007bff;
 }
 
-.body {
+.inner_body {
   margin: 20px;
-  border: 1px solid #ddd;
-  padding: 20px;
 }
 
-.body div {
+/* Styling for the heading and cancel button */
+h2 {
+  color: #333;
+}
+
+button {
+  background-color: red; /* Red color for the cancel button */
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   margin-bottom: 20px;
 }
 
-h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
-}
-
+/* Styling for the form inputs and update button */
 label {
   display: block;
-  margin-bottom: 5px;
+  margin-top: 10px;
   font-weight: bold;
-  color: #333;
 }
 
 input {
@@ -51,14 +72,18 @@ input {
   box-sizing: border-box;
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #dc3545;
+.update_btn {
+  background-color: #4caf50;
   color: #fff;
+  padding: 10px 20px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.update_btn {
-  background-color: #28a745;
+.notify span i {
+  color: #2ecc71;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
 }
