@@ -120,7 +120,7 @@ const SignUp = () => {
         {/* conditonal rendering for forgot password */}
         <div>
           {haveAccount && (
-            <a className={classes.forgot_password} href="#">
+            <a className={classes.forgot_password} href="/forgot-password">
               Forgot password
             </a>
           )}
