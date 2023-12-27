@@ -71,13 +71,38 @@ const Expenses = () => {
       // Handle the parsed data from the JSON response
       .then((data) => {
         // Extract values from the data object (or use an empty object if data is null or undefined)
-        const fetchedExpenses = Object.values(data || {});
+        const fetchedValues = Object.values(data || {});
+        const fetchedIds = Object.keys(data || {});
+
+        let expensesWithIds = [];
+        for (let i = 0; i < fetchedIds.length; i++) {
+          expensesWithIds = [
+            ...expensesWithIds,
+            { id: fetchedIds[i], ...fetchedValues[i] },
+          ];
+        }
         // Set the component's state with the fetched expenses
-        setExpenses(fetchedExpenses);
+        setExpenses(expensesWithIds);
       })
       // Handle any errors that occurred during the fetch or parsing process
       .catch((error) => console.log(error.message));
-  }, []); // The empty dependency array ensures that this useEffect runs only once when the component mounts
+  }, [expenses]); // The empty dependency array ensures that this useEffect runs only once when the component mounts
+
+  // Function to handle the deletion of an expense by making a DELETE request to the Firebase Realtime Database
+  const deleteHandler = (id) => {
+    fetch(
+      `https://expense-tracker-56d18-default-rtdb.firebaseio.com/expenses/${id}.json`,
+      { method: "DELETE" } // Specify that this is a DELETE request
+    )
+      .then((response) => {
+        // Check if the response status is not okay 
+        if (!response.ok) {
+          throw new Error("Expenses deletion failed"); // Throw an error if deletion is not successful
+        }
+        // If the response status is okay, the deletion was successful
+      })
+      .catch((error) => console.log(error.message)); // Catch any errors that occurred during the fetch or deletion process
+  };
 
   return (
     <>
@@ -138,14 +163,15 @@ const Expenses = () => {
         {/* Display expenses using the map function */}
         {expenses.length > 0 && (
           <ul className={classes.expenses_list}>
-            {expenses.map((item, index) => (
-              <li key={index}>
+            {expenses.map((item) => (
+              <li key={item.id}>
                 <strong>Item:</strong>
                 {item.description}: <strong>Rs.</strong>
                 {item.amount}, <strong>Category:</strong>
                 {item.category}
                 {/* Display custom category in parentheses for "Other" category */}
                 {item.category === "Other" && `(${item.customCategory})`}
+                <button onClick={() => deleteHandler(item.id)}>Delete</button>
               </li>
             ))}
           </ul>
