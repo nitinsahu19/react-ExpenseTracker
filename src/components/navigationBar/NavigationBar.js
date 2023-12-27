@@ -20,6 +20,10 @@ const NavigationBar = () => {
         <li>
           <Link to="/profile">Profile</Link>
         </li>
+        {/* List item with a link component for the "Expenses" route */}
+        <li>
+          <Link to="/expenses">Expenses</Link>
+        </li>
         {/* List item with a button for logout, triggering the logoutHandler function on click. */}
         <li>
           <button onClick={logoutHandler} type="button">

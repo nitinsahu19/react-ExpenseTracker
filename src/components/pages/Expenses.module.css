@@ -1,0 +1,45 @@
+.description {
+  width: 300px;
+  height: 100px;
+  resize: none;
+
+  &::placeholder {
+    color: #999;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+}
+
+.expense_amt {
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.custom_category {
+  &::placeholder {
+    color: #999;
+  }
+}
+
+ul.expenses_list {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Style each list item */
+ul.expenses_list li {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul.expenses_list li:hover {
+  background-color: #e0e0e0;
+}
