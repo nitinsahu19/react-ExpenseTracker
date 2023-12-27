@@ -23,23 +23,11 @@
   }
 }
 
-ul.expenses_list {
-  list-style-type: none;
-  padding: 0;
+.expenses_list {
+  list-style: none;
+  border: 1px solid black;
+  padding: 20px; 
+  margin-top: 20px;
 }
 
-/* Style each list item */
-ul.expenses_list li {
-  background-color: #f4f4f4;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin: 5px 0;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-ul.expenses_list li:hover {
-  background-color: #e0e0e0;
-}
