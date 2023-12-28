@@ -9,6 +9,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // using to create a reference with the context store
   const authCtx = useContext(AuthContext);
@@ -63,7 +64,7 @@ const SignUp = () => {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Error in sending data");
+          throw new Error("Invalid credentials");
         }
         return response.json();
       })
@@ -79,6 +80,8 @@ const SignUp = () => {
       // if login process throw some error
       .catch((error) => {
         console.log(error.message);
+        // setting errorMessage
+        setErrorMessage(`*(${error.message})`);
       });
   };
 
@@ -92,6 +95,9 @@ const SignUp = () => {
       <form onSubmit={submitHandler} className={classes.signup_form}>
         {/* Conditional rendering based on haveAccount state */}
         {haveAccount ? <h2>Sign in</h2> : <h2>Sign Up</h2>}
+
+        {/* conditonally rendering errorMessage */}
+        {<p className={classes.error_message}>{errorMessage}</p>}
 
         {/* Email input field with corresponding event handlers */}
         <label htmlFor="email">Enter Email: </label>

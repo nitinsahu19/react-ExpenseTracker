@@ -21,6 +21,14 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* error message */
+.error_message {
+  color: red;
+  /* font-weight: bold; */
+  /* font-style: italic; */
+  text-align: center;
+}
+
 h2 {
   text-align: center;
   color: #333;
